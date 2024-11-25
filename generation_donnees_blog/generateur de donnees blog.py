@@ -23,10 +23,11 @@ def generateur_article(nb_article, donnee_compte):
                 "id" : donnee_auteur["id"],
                 "pseudo" : donnee_auteur["pseudo"]
             },
-            "date" :fake.date_time_between(start_date=datetime.datetime.strptime(donnee_auteur["date_creation"], "%Y-%m-%dT%H:%M:%S"),end_date=datetime.datetime.now()).isoformat(),
+            "date" :fake.date_time_between(start_date=datetime.datetime.fromisoformat(donnee_auteur["date_creation"]["$date"].rstrip("Z")),end_date=datetime.datetime.now()).isoformat(),
         }
         donnees.append(entree)
     return  (donnees)
+
 
 def generateur_compte(nb_compte) :
     donnees = []
@@ -37,10 +38,10 @@ def generateur_compte(nb_compte) :
                 "pseudo" : fake.text(max_nb_chars=20),
                 "nom" : fake.last_name(),
                 "prenom" : fake.first_name(),
-                "anniversaire" : fake.date_time_between(start_date='-100y', end_date='-18y').isoformat(),
+                "anniversaire" : { "$date": fake.date_time_between(start_date='-100y', end_date='-18y').isoformat()+"Z"},
                 "email": fake.email(),
                 "mdp" : fake.password(),
-                "date_creation" : fake.date_time_between(start_date='-100y', end_date='-1y').isoformat(),
+                "date_creation" : { "$date": fake.date_time_between(start_date='-100y', end_date='-1y').isoformat()+"Z"},
                 "description" : fake.text(max_nb_chars=200),
             }
         donnees.append(entree)
@@ -75,3 +76,4 @@ def generator ():
     print("fin generation")
 
 generator()
+
