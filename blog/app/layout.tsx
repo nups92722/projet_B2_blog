@@ -1,12 +1,13 @@
 import Header from "./element_gabarit/header"
 import Footer from "./element_gabarit/footer"
+import './globals.css'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
         <Header/>
-        {children}
+        <div className='p-4 bg-red-700'>{children}</div>
         <Footer/>
       </body>
     </html>
