@@ -1,13 +1,13 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+ 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
+ 
 generator client {
   provider = "prisma-client-js"
 }
-
+ 
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
@@ -16,26 +16,27 @@ type Image {
   chemin      String
   description String
 }
-
+ 
 type Auteur {
-  id        String
+  id        Int
   pseudo    String
 }
-
+ 
 model Article {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  mongodb_id   String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           Int      @unique
   titre        String
-  image        Image
+  image        Image?
   article      String
   utilisateur  Auteur
-  utilisateurId String   @db.ObjectId
   date         DateTime
 }
-
-
+ 
+ 
 model Utilisateur {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId // Mappé à `_id` dans MongoDB
-  pseudo        String
+  mongodb_id    String   @id @default(auto()) @map("_id") @db.ObjectId
+  id            Int      @unique
+  pseudo        String   @unique
   nom           String
   prenom        String
   anniversaire  DateTime
@@ -44,5 +45,3 @@ model Utilisateur {
   date_creation DateTime
   description   String?
 }
-
-
