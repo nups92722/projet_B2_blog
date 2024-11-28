@@ -28,7 +28,7 @@ model Article {
   titre        String
   image        Image?
   article      String
-  utilisateur  Auteur
+  auteur       Auteur   
   date         DateTime
 }
  

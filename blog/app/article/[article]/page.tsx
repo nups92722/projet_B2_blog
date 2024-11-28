@@ -12,7 +12,7 @@ export default async function Home() {
             <p>article : {article.article}</p>
           </div>
           <div>
-            <p>auteur : {article.utilisateur.pseudo}</p>
+            <p>auteur : {article.auteur.pseudo}</p>
             <p>date publication : {article.date.toDateString()}</p>
           </div>
         </>

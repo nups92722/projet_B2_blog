@@ -17,7 +17,7 @@ export default async function Home() {
                 <p>titre : {article.titre}</p>
               </div>
               <div>
-                <p>auteur : {article.utilisateur.pseudo}</p>
+                <p>auteur : {article.auteur.pseudo}</p>
                 <p>date publication : {article.date.toDateString()}</p>
               </div>
               </Link>
