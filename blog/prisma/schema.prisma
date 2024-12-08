@@ -7,8 +7,33 @@
 generator client {
   provider = "prisma-client-js"
 }
-
+ 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+model Article {
+  mongodb_id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                  Int      @unique
+  titre               String
+  imageChemin         String
+  imageDescription    String
+  article             String
+  auteurId            String
+  auteurPseudo        String
+  date                DateTime
+}
+ 
+model Utilisateur {
+  mongodb_id    String   @id @default(auto()) @map("_id") @db.ObjectId
+  id            Int      @unique
+  pseudo        String   @unique
+  nom           String
+  prenom        String
+  anniversaire  DateTime
+  email         String   @unique
+  mdp           String
+  date_creation DateTime
+  description   String?
 }
