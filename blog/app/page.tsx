@@ -21,7 +21,7 @@ const PageAccueil = () => {
   const [page, modifPage] = useState<number>(minPage);
 
   // Paramètres flexibles à envoyer à l'API
-  const [params, setParams] = useState({
+  const [params, modifParams] = useState({
     Page: page 
   });
 
@@ -29,26 +29,26 @@ const PageAccueil = () => {
   const { donnees: Articles, chargement, erreur } = useFetch<Article[]>('/api/articles', params, 'POST');
 
   // Fonction pour gérer la modification de la page dans l'input
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = parseInt(event.target.value, 10); // convertir la valeur en nombre
-    if (!isNaN(newValue) && newValue >= minPage) {
-        modifPage(newValue); // Mettre à jour l'état avec la nouvelle valeur
+  const changeEtat = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const nouvValeur = parseInt(event.target.value, 10); // convertir la valeur en nombre
+    if (!isNaN(nouvValeur) && nouvValeur >= minPage) {
+        modifPage(nouvValeur); // Mettre à jour l'état avec la nouvelle valeur
     }
   };
 
   // Fonction pour incrémenter la page
   const increment = () => {
-    const newPage = page + 1;
-    modifPage(newPage);
-    setParams(prev => ({ ...prev, Page: newPage })); // Mettre à jour les paramètres dynamiques
+    const nouvPage = page + 1;
+    modifPage(nouvPage);
+    modifParams(prev => ({ ...prev, Page: nouvPage })); // Mettre à jour les paramètres dynamiques
   };
 
   // Fonction pour décrémenter la page
   const decrement = () => {
     if (page > minPage) {
-        const newPage = page - 1;
-        modifPage(newPage);
-        setParams(prev => ({ ...prev, Page: newPage })); // Mettre à jour les paramètres dynamiques
+        const nouvPage = page - 1;
+        modifPage(nouvPage);
+        modifParams(prev => ({ ...prev, Page: nouvPage })); // Mettre à jour les paramètres dynamiques
     }
   };
 
@@ -83,7 +83,7 @@ const PageAccueil = () => {
         <input
           type="number"
           value={page}  // L'input est contrôlé par l'état
-          onChange={handleChange} // Mise à jour de l'état lors de la modification de l'input
+          onChange={changeEtat} // Mise à jour de l'état lors de la modification de l'input
         />
         <button onClick={increment}>Incrémenter</button>
         <button onClick={decrement}>Décrémenter</button>
