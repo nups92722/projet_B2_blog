@@ -13,27 +13,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Article {
+model Commentaire {
   mongodb_id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  id                  Int      @unique
+  contenu      String    // Contenu du commentaire
+  auteurPseudo String    // Pseudo de l'auteur du commentaire
+  date         DateTime  @default(now()) // Date du commentaire
+
+  // Relation avec l'article
+  articleId    Int       // Clé étrangère vers l'article
+  article      Article   @relation(fields: [articleId], references: [id]) // Relation vers le modèle Article
+}
+
+model Article {
+  mongodb_id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  id                  Int         @unique
   titre               String
-  imageChemin         String
-  imageDescription    String
+  imageChemin         String?
+  imageDescription    String?
   article             String
-  auteurId            String
+  auteurId            Int
+  auteur              Utilisateur @relation("ArticlesEcrits", fields: [auteurId], references: [id]) // Relation avec l'auteur
   auteurPseudo        String
   date                DateTime
+  commentaires        Commentaire[]  // Un article peut avoir plusieurs commentaires
 }
- 
+
 model Utilisateur {
-  mongodb_id    String   @id @default(auto()) @map("_id") @db.ObjectId
-  id            Int      @unique
-  pseudo        String   @unique
-  nom           String
-  prenom        String
-  anniversaire  DateTime
-  email         String   @unique
-  mdp           String
-  date_creation DateTime
-  description   String?
+  mongodb_id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  id                  Int         @unique
+  pseudo              String      @unique
+  nom                 String
+  prenom              String
+  anniversaire        DateTime
+  email               String      @unique
+  mdp                 String
+  date_creation       DateTime
+  description         String?
+  
+  // Relation pour les articles écrits
+  articles            Article[]   @relation("ArticlesEcrits")
 }

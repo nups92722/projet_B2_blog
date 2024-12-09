@@ -1,7 +1,24 @@
+"use client"
 import React from "react"
+import { useSession } from "next-auth/react";
+import {useRouter} from "next/navigation"
 
 const Header: React.FC = () => {
-  return (
+  const { data: session} = useSession(); // Récupère l'état de la session
+  const router = useRouter(); // Hook pour naviguer
+
+  // Fonction pour gérer le bouton en fonction de l'état de la session
+  const menuUtilisateur = () => {
+    if (session) {
+      // Si l'utilisateur est connecté, on le redirige vers le dashboard
+      router.push("/gestionUtilisateur");
+    } else {
+      // Si l'utilisateur n'est pas connecté, on le redirige vers la page de login
+      router.push("/connexion");
+    }
+  };
+
+return (
 <header className="flex justify-center items-center bg-gray-800 py-2 px-5 text-white">
   <div className="flex items-center w-full max-w-screen-xl justify-between">
     
@@ -26,7 +43,7 @@ const Header: React.FC = () => {
         </li>
         
         <li className="mx-4">
-          <a href="#" className="block px-4 py-2 transition duration-300 ease-in-out bg-transparent hover:bg-gray-600">Menu Item 2</a>
+          <a href="/" className="block px-4 py-2 transition duration-300 ease-in-out bg-transparent hover:bg-gray-600">accueil</a>
         </li>
 
         <li className="mx-4">
@@ -36,8 +53,10 @@ const Header: React.FC = () => {
     </nav>
 
     <div className="login">
-      <button className="bg-blue-500 text-white py-2 px-4 text-lg rounded transition duration-300 ease-in-out hover:bg-blue-700">
-        Se connecter
+      <button onClick={menuUtilisateur} className="bg-blue-500 text-white py-2 px-4 text-lg rounded transition duration-300 ease-in-out hover:bg-blue-700">
+        {session ? `Bonjour, ${session.user?.name}` // Affiche le nom de l'utilisateur s'il est connecté
+        : "Se connecter" // Affiche "Se connecter" s'il n'est pas connecté
+      }
       </button>
     </div>
   </div>
