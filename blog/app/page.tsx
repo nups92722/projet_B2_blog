@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useFetch } from './gestionRequete/fetchHook'; // Importer le hook personnalisé
 
 interface Article {
@@ -16,13 +16,14 @@ interface Article {
 }
 
 const PageAccueil = () => {
-    const minPage = 1;
+  const minPage = 1;
+
   // Etat pour gérer la page
   const [page, modifPage] = useState<number>(minPage);
 
   // Paramètres flexibles à envoyer à l'API
   const [params, modifParams] = useState({
-    Page: page 
+    Page: page,
   });
 
   // Utilisation des hooks pour récupérer les articles
@@ -32,7 +33,7 @@ const PageAccueil = () => {
   const changeEtat = (event: React.ChangeEvent<HTMLInputElement>) => {
     const nouvValeur = parseInt(event.target.value, 10); // convertir la valeur en nombre
     if (!isNaN(nouvValeur) && nouvValeur >= minPage) {
-        modifPage(nouvValeur); // Mettre à jour l'état avec la nouvelle valeur
+      modifPage(nouvValeur); // Mettre à jour l'état avec la nouvelle valeur
     }
   };
 
@@ -40,56 +41,64 @@ const PageAccueil = () => {
   const increment = () => {
     const nouvPage = page + 1;
     modifPage(nouvPage);
-    modifParams(prev => ({ ...prev, Page: nouvPage })); // Mettre à jour les paramètres dynamiques
+    modifParams((prev) => ({ ...prev, Page: nouvPage })); // Mettre à jour les paramètres dynamiques
   };
 
   // Fonction pour décrémenter la page
   const decrement = () => {
     if (page > minPage) {
-        const nouvPage = page - 1;
-        modifPage(nouvPage);
-        modifParams(prev => ({ ...prev, Page: nouvPage })); // Mettre à jour les paramètres dynamiques
+      const nouvPage = page - 1;
+      modifPage(nouvPage);
+      modifParams((prev) => ({ ...prev, Page: nouvPage })); // Mettre à jour les paramètres dynamiques
     }
   };
 
-  // Si les articles sont en cours de chargement
-  if (chargement) {
-    return <p>Chargement des articles...</p>;
-  }
-
-  // Si une erreur est survenue lors du chargement des articles
-  if (erreur) {
-    return <p>Erreur : {erreur}</p>;
-  }
-
   return (
-    <>
-      <div>
+    <div className="bg-gray-50 min-h-screen py-8">
+      <div className="container mx-auto px-4">
         {Articles && Articles.length > 0 ? (
           Articles.map((article) => (
-            <div key={article.id} style={{ marginBottom: '20px' }}>
-              <h2>{article.titre}</h2>
-              <Link href={`/article/${article.id}`}>
-            Cliquez ici pour voir l'article {article.id}
-            </Link>
+            <div key={article.id} className="bg-white shadow-md rounded-lg p-6 mb-4">
+              <h2 className="text-xl font-bold text-gray-800 mb-2">{article.titre}</h2>
+              <Link
+                href={`/article/${article.id}`}
+                className="text-blue-600 hover:underline font-medium"
+              >
+                Cliquez ici pour voir l'article {article.id}
+              </Link>
             </div>
           ))
         ) : (
-          <p>Aucun article disponible.</p>
+          <p className="text-center text-gray-600">Aucun article disponible.</p>
         )}
       </div>
 
-      <div>
-        <input
-          type="number"
-          value={page}  // L'input est contrôlé par l'état
-          onChange={changeEtat} // Mise à jour de l'état lors de la modification de l'input
-        />
-        <button onClick={increment}>Incrémenter</button>
-        <button onClick={decrement}>Décrémenter</button>
-        <p>Valeur actuelle : {page}</p>
+      <div className="mt-6 text-center">
+        <div className="mb-4">
+          <input
+            type="number"
+            value={page}
+            onChange={changeEtat}
+            className="border-gray-300 rounded-lg shadow-sm px-3 py-2 w-20 text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="space-x-4">
+          <button
+            onClick={decrement}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transition"
+          >
+            Page précédente
+          </button>
+          <button
+            onClick={increment}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transition"
+          >
+            Page suivante
+          </button>
+        </div>
+        <p className="mt-4 text-gray-600">Page actuelle : {page}</p>
       </div>
-    </>
+    </div>
   );
 };
 

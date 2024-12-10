@@ -18,32 +18,35 @@ const Footer: React.FC = () => {
         <div className="footer-section m-5 flex-1 min-w-[300px]">
           <h2 className="text-xl mb-3 text-gray-200">Contactez-nous</h2>
           <ul className="list-none p-0">
-            <li className="text-sm text-gray-400 mb-2">Email : contact@monsite.com</li>
-            <li className="text-sm text-gray-400 mb-2">Téléphone : +33 1 23 45 67 89</li>
+            <li className="text-sm text-gray-400 mb-2">Email : contact@ncy.com</li>
+            <li className="text-sm text-gray-400 mb-2">Téléphone : +33 6 33 09 59 51</li>
             <li className="text-sm text-gray-400">Adresse : 123 Rue de l'Innovation, Paris</li>
+            <li className="text-sm text-gray-400 mb-2">Paypal : jerushenbabouche2004@gmail.com</li>
           </ul>
         </div>
 
         {/* Membre de l'équipe */}
         <div className="footer-section m-5 flex-1 min-w-[300px]">
           <h2 className="text-xl mb-3 text-gray-200">Membre de l'équipe</h2>
-          <div className="team-member text-center">
+          <div className="team-member flex items-center">
             <Image
               src="/Yann-KRASINSKI.jpg"
               alt="Yann Krasinski - Développeur"
-              className="rounded-full border-2 border-gray-300 mb-3"
+              className="rounded-full border-2 border-gray-300 mr-4"
               width={100}
               height={100}
             />
-            <p className="team-name text-lg font-bold text-white">Yann Krasinski</p>
-            <p className="team-role text-sm text-gray-400">Développeur Front-End</p>
+            <div className="text-left">
+              <p className="team-name text-lg font-bold text-white">Yann Krasinski</p>
+              <p className="team-role text-sm text-gray-400">Développeur Front-End</p>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Copyright */}
       <div className="footer-bottom mt-5 text-sm text-gray-500 text-center">
-        <p>&copy; 2024 Mon Site Web. Tous droits réservés.</p>
+        <p>&copy; 2024 NCY & CO. Tous droits réservés.</p>
       </div>
     </footer>
   );
