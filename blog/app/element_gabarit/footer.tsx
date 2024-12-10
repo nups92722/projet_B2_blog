@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
           <h2 className="text-xl mb-3 text-gray-200">Membre de l'équipe</h2>
           <div className="team-member text-center">
             <Image
-              src="/YannKRASINSKI.jpg"
+              src="/Yann-KRASINSKI.jpg"
               alt="Yann Krasinski - Développeur"
               className="rounded-full border-2 border-gray-300 mb-3"
               width={100}
